@@ -9,6 +9,9 @@ from datetime import datetime
 
 BUCKETS = {"#", "Other"} | set(string.ascii_uppercase)
 
+# Windows trash/system folders; hidden (.-prefixed) trash folders are skipped as hidden
+SYSTEM_DIRS = {"$recycle.bin", "recycler", "system volume information"}
+
 # Paths that a dry run has "reserved", so later items see them as taken.
 _planned = set()
 
@@ -271,8 +274,9 @@ def build_parser():
             "'#' (names starting with 0-9), 'A'-'Z' (names starting with a "
             "letter) and 'Other' (anything else, e.g. kanji, symbols). "
             "Sorting uses the folder name with the mask removed. "
-            "Hidden folders (starting with '.') and the target folders "
-            "themselves are never moved."
+            "Hidden folders (starting with '.'), the Windows trash/system "
+            "folders ($RECYCLE.BIN, RECYCLER, System Volume Information) and "
+            "the target folders themselves are never moved."
         ),
         epilog=(
             "name clashes:\n"
@@ -372,6 +376,7 @@ def main():
         if os.path.isdir(d)
         and d not in BUCKETS          # don't re-sort our own target folders
         and not d.startswith(".")     # never touch .git and other hidden folders
+        and d.lower() not in SYSTEM_DIRS    # recycle bin etc., silently
     ]
 
     for d in dirs:

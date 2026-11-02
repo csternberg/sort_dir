@@ -17,7 +17,7 @@ Always try `--dry-run` first, then a real run, then a second real run (must be a
 
 - **Switches:** every switch has a short and a long form, and both cases of the short form are registered (`-M`/`-m`). Long switches are lower-cased in `normalize_argv()`, so `--MASK` works; option values must not be altered. Add new switches the same way and update the help epilog and README.
 - **Bucket logic:** `target_folder()` uses ASCII only (`string.ascii_letters` / `string.digits`). Do not use `isalpha()`/`isdigit()`; Unicode letters belong in `Other`.
-- **Skipped folders:** hidden folders (`.`-prefixed) and the bucket names are never processed.
+- **Skipped folders:** hidden folders (`.`-prefixed), the Windows trash/system folders (`SYSTEM_DIRS`, skipped silently) and the bucket names are never processed.
 - **Name clashes:** go through `unique_name()` (`name_001`, files `name_001.ext`). `--merge` is handled in `merge_into()`; sub folder clashes are renamed, not merged recursively.
 - **Mask:** `remove_mask()` matches whole words, case-insensitive. Sorting always uses the fully stripped name. `--strip` renames to that name; leading white space is only kept with `--whitespace`. Never rename to an empty name.
 - **Dry run:** must not touch the file system. Planned destinations are tracked in `_planned` so later items see them as taken.

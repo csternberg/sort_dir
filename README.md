@@ -8,7 +8,7 @@ Sorts the sub folders of the current directory into alphabetical bucket folders.
 | `A`-`Z` | an ASCII letter (case-insensitive) |
 | `Other` | anything else: kanji, accented letters, symbols, graphics, ... |
 
-Hidden folders (starting with `.`) and the bucket folders themselves are never moved, so the script can safely be run repeatedly. Requires Python 3.7+, no dependencies.
+Hidden folders (starting with `.`, which covers `.Trash` and `.Trashes`), the Windows trash/system folders (`$RECYCLE.BIN`, `RECYCLER`, `System Volume Information`) and the bucket folders themselves are never moved, so the script can safely be run repeatedly. Requires Python 3.7+, no dependencies.
 
 ## Usage
 
